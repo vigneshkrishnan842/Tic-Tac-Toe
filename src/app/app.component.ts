@@ -19,9 +19,7 @@ export class AppComponent {
   checkWinner() {
     //Row check
     for (let i = 0,j=0; i < this.gameStatus.length; i++){
-      if (this.gameStatus[i][j] === this.gameStatus[i][j + 1]) {
-        if (this.gameStatus[i][j] === this.gameStatus[i][j + 2]) {
-          if (this.gameStatus[i][j] !== -1) {
+      if ((this.gameStatus[i][j] === this.gameStatus[i][j + 1]) && (this.gameStatus[i][j] === this.gameStatus[i][j + 2]) && (this.gameStatus[i][j] !== -1)) {
               document.getElementById('0' + i + j)!.style.color = '#fafcfb';
               document.getElementById('0' + i + (j+1))!.style.color = '#fafcfb';
               document.getElementById('0' + i + (j+2))!.style.color = '#fafcfb';
@@ -29,16 +27,11 @@ export class AppComponent {
               document.getElementById('' + i + (j+1))!.style.backgroundColor = '#28a688';
               document.getElementById('' + i + (j+2))!.style.backgroundColor = '#28a688';              
             return true;
-          }
-        }
-        j = 0;
       }
     }
     //Column check
     for (let i = 0,j=0; j < this.gameStatus[0].length; j++){
-      if (this.gameStatus[i][j] === this.gameStatus[i+1][j]) {
-        if (this.gameStatus[i][j] === this.gameStatus[i+2][j]) {
-          if (this.gameStatus[i][j] !== -1) {
+      if ((this.gameStatus[i][j] === this.gameStatus[i+1][j]) && (this.gameStatus[i][j] === this.gameStatus[i+2][j]) &&  (this.gameStatus[i][j] !== -1)) {
             document.getElementById('0' + i + j)!.style.color = '#fafcfb';
             document.getElementById('0' + (i+1) + j)!.style.color = '#fafcfb';
             document.getElementById('0' + (i+2) + j)!.style.color = '#fafcfb';
@@ -46,9 +39,6 @@ export class AppComponent {
             document.getElementById('' + (i+1) + j)!.style.backgroundColor = '#28a688';
             document.getElementById('' + (i+2) + j)!.style.backgroundColor = '#28a688';
             return true;
-          }
-        }
-        i = 0;
       }
     }
     //Diagonal check
@@ -117,7 +107,7 @@ export class AppComponent {
             this.winnerFlag = tempWinner;
           setTimeout(() => {
             this.gameOver = tempWinner;
-          }, 700);
+          }, 800);
         } else { 
           this.currentPlayer = this.currentPlayer === 0 ? 1 : 0;
         }

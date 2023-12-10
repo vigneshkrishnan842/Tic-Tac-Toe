@@ -5,7 +5,7 @@
 <h3 class="gameHeadings" *ngIf="!winnerFlag;else winner_content">{{players[currentPlayer]}}'s Turn</h3>
 <ng-template #winner_content><h3 class="gameHeadings XODisplay">Game Over!</h3></ng-template>
 <div class="tableContainer">
-  <div *ngFor="let data of multi; let i=index" class="tableRow">
+  <div *ngFor="let data of multi; let i=index">
     <div *ngFor="let num of data; let j=index" class="innerDiv" (click)="buttonClick(i,j)" id="{{''+i+j}}">
     </div>
   </div>
