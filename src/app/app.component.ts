@@ -14,6 +14,7 @@ export class AppComponent {
   movesCount = 0;
   winnerFlag = false;
   gameOver = false;
+  tieFlag = false;
 
   constructor() { }
   checkWinner() {
@@ -88,6 +89,7 @@ export class AppComponent {
     this.movesCount = 0;  
     this.winnerFlag = false;
     this.gameOver = false;
+    this.tieFlag = false;
   }
 
   buttonClick(i: number, j: number) {
@@ -109,7 +111,15 @@ export class AppComponent {
             this.gameOver = tempWinner;
           }, 800);
         } else { 
-          this.currentPlayer = this.currentPlayer === 0 ? 1 : 0;
+          if (this.movesCount === 9) { 
+            this.tieFlag = true;
+            this.winnerFlag = true;
+            setTimeout(() => {
+              this.gameOver = this.tieFlag;
+            }, 800);
+          } else {
+            this.currentPlayer = this.currentPlayer === 0 ? 1 : 0; 
+          }
         }
       }else {
         this.currentPlayer = this.currentPlayer === 0 ? 1 : 0;
