@@ -3,7 +3,8 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
 
 ## TicTacToe GIF:
-![Tic-Tac-Toe GIF](https://github.com/vigneshkrishnan842/Tic-Tac-Toe/assets/12878201/ebc45372-fb24-4345-9ea1-5be3554f6b30)
+![Tic-Tac-Toe-Final](https://github.com/vigneshkrishnan842/Tic-Tac-Toe/assets/12878201/8c8b2e98-201c-4504-874f-d3272b12741e)
+
 
 ## Development server
 
