@@ -1,11 +1,11 @@
-import {Component } from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit{
   title = 'tic-tac-toe';
   multi: number[][] = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
   gameStatus: number[][] = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
@@ -17,6 +17,17 @@ export class AppComponent {
   tieFlag = false;
 
   constructor() { }
+
+  ngAfterViewInit(): void {
+    for (let i = 0; i< this.multi.length; i++) {
+      document.getElementById('' + i + 0)!.style.borderLeft = '0px';
+      document.getElementById('' + i + (this.multi.length-1))!.style.borderRight = '0px';
+      document.getElementById('' + 0 + i)!.style.borderTop = '0px';
+      document.getElementById('' + (this.multi.length-1) + i)!.style.borderBottom = '0px';
+    }
+  }
+
+  
   checkWinner() {
     //Row check
     for (let i = 0,j=0; i < this.gameStatus.length; i++){
