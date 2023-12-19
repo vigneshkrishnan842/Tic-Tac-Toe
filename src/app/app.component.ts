@@ -1,14 +1,15 @@
-import {Component, AfterViewInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent {
   title = 'tic-tac-toe';
   multi: number[][] = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
   gameStatus: number[][] = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
+  winnerHighlight: number[][] = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
   players = ['Player 1', 'Player 2'];
   currentPlayer = 0; 
   movesCount = 0;
@@ -17,52 +18,33 @@ export class AppComponent implements AfterViewInit{
   tieFlag = false;
 
   constructor() { }
-
-  ngAfterViewInit(): void {
-    for (let i = 0; i< this.multi.length; i++) {
-      document.getElementById('' + i + 0)!.style.borderLeft = '0px';
-      document.getElementById('' + i + (this.multi.length-1))!.style.borderRight = '0px';
-      document.getElementById('' + 0 + i)!.style.borderTop = '0px';
-      document.getElementById('' + (this.multi.length-1) + i)!.style.borderBottom = '0px';
-    }
-  }
-
   
   checkWinner() {
     //Row check
     for (let i = 0,j=0; i < this.gameStatus.length; i++){
       if ((this.gameStatus[i][j] === this.gameStatus[i][j + 1]) && (this.gameStatus[i][j] === this.gameStatus[i][j + 2]) && (this.gameStatus[i][j] !== -1)) {
-              document.getElementById('0' + i + j)!.style.color = '#fafcfb';
-              document.getElementById('0' + i + (j+1))!.style.color = '#fafcfb';
-              document.getElementById('0' + i + (j+2))!.style.color = '#fafcfb';
-              document.getElementById('' + i + j)!.style.backgroundColor = '#28a688';
-              document.getElementById('' + i + (j+1))!.style.backgroundColor = '#28a688';
-              document.getElementById('' + i + (j+2))!.style.backgroundColor = '#28a688';              
-            return true;
+        this.winnerHighlight[i][j] = 1;
+        this.winnerHighlight[i][j+1] = 1;
+        this.winnerHighlight[i][j + 2] = 1;
+        return true;
       }
     }
     //Column check
     for (let i = 0,j=0; j < this.gameStatus[0].length; j++){
       if ((this.gameStatus[i][j] === this.gameStatus[i+1][j]) && (this.gameStatus[i][j] === this.gameStatus[i+2][j]) &&  (this.gameStatus[i][j] !== -1)) {
-            document.getElementById('0' + i + j)!.style.color = '#fafcfb';
-            document.getElementById('0' + (i+1) + j)!.style.color = '#fafcfb';
-            document.getElementById('0' + (i+2) + j)!.style.color = '#fafcfb';
-            document.getElementById('' + i + j)!.style.backgroundColor = '#28a688';
-            document.getElementById('' + (i+1) + j)!.style.backgroundColor = '#28a688';
-            document.getElementById('' + (i+2) + j)!.style.backgroundColor = '#28a688';
-            return true;
+        this.winnerHighlight[i][j] = 1;
+        this.winnerHighlight[i+1][j] = 1;
+        this.winnerHighlight[i + 2][j] = 1;
+        return true;
       }
     }
     //Diagonal check
     for (let i = 1, j = 1; i < this.gameStatus.length && j < this.gameStatus[0].length; i++, j++){
       if (this.gameStatus[i - 1][j - 1] === this.gameStatus[i][j]) {
         if (i === this.gameStatus.length - 1) {
-          document.getElementById('0' + i + j)!.style.color = '#fafcfb';
-          document.getElementById('0' + (i-1) + (j-1))!.style.color = '#fafcfb';
-          document.getElementById('0' + (i-2) + (j-2))!.style.color = '#fafcfb';
-          document.getElementById('' + i + j)!.style.backgroundColor = '#28a688';
-          document.getElementById('' + (i-1) + (j-1))!.style.backgroundColor = '#28a688';
-          document.getElementById('' + (i-2) + (j-2))!.style.backgroundColor = '#28a688';
+          this.winnerHighlight[i][j] = 1;
+          this.winnerHighlight[i-1][j-1] = 1;
+          this.winnerHighlight[i - 2][j - 2] = 1;
           return true;
       }  
       } else {
@@ -73,13 +55,10 @@ export class AppComponent implements AfterViewInit{
     for (let i = 0, j = 2; i < this.gameStatus.length-1 && j > 0; i++, j--){
       if (this.gameStatus[i + 1][j - 1] === this.gameStatus[i][j]) {
         if (i === this.gameStatus.length - 2) {
-          document.getElementById('0' + i + j)!.style.color = '#fafcfb';
-          document.getElementById('0' + (i-1) + (j+1))!.style.color = '#fafcfb';
-          document.getElementById('0' + (i+1) + (j-1))!.style.color = '#fafcfb';
-          document.getElementById('' + i + j)!.style.backgroundColor = '#28a688';
-          document.getElementById('' + (i-1) + (j+1))!.style.backgroundColor = '#28a688';
-          document.getElementById('' + (i + 1) + (j - 1))!.style.backgroundColor = '#28a688';
-            return true;
+          this.winnerHighlight[i][j] = 1;
+          this.winnerHighlight[i-1][j+1] = 1;
+          this.winnerHighlight[i + 1][j - 1] = 1;
+          return true;
       }  
       } else {
         break;
@@ -88,14 +67,8 @@ export class AppComponent implements AfterViewInit{
     return false;
   }
   reset() {
-    console.log('inside reset()');
-    const innerBoxes = document.getElementsByClassName('innerDiv');
-    for (let i = 0; i < innerBoxes.length; i++) { 
-      const ele = innerBoxes[i] as HTMLElement;
-      ele.style.backgroundColor = '#fafcfb';
-      ele.textContent = '';
-    }
     this.gameStatus = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
+    this.winnerHighlight = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
     this.currentPlayer = 0; 
     this.movesCount = 0;  
     this.winnerFlag = false;
@@ -105,19 +78,12 @@ export class AppComponent implements AfterViewInit{
 
   buttonClick(i: number, j: number) {
     if (this.gameStatus[i][j] === -1) {
-      let inputValue = document.createElement('div');
-      inputValue.textContent = this.currentPlayer === 0 ? 'X' : 'O';
-      inputValue.style.fontFamily = 'sans-serif';
-      inputValue.style.fontSize = 'xxx-large';
-      inputValue.id = '0' + i + j ;
-      inputValue.style.color = this.currentPlayer === 0 ? '#28a688' : '#0b332a';
-      document?.getElementById('' + i + j)?.appendChild(inputValue);
       this.gameStatus[i][j] = this.currentPlayer;
       this.movesCount++;
       if (this.movesCount >= 5) {
         let tempWinner = this.checkWinner();
         if (tempWinner) {
-            this.winnerFlag = tempWinner;
+          this.winnerFlag = tempWinner;
           setTimeout(() => {
             this.gameOver = tempWinner;
           }, 800);

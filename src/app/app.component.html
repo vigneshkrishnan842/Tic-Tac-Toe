@@ -7,7 +7,12 @@
 <ng-template #winner_content><h3 class="gameHeadings XODisplay">Game Over!</h3></ng-template>
 <div class="tableContainer">
   <div *ngFor="let data of multi; let i=index">
-    <div *ngFor="let num of data; let j=index" class="innerDiv" (click)="buttonClick(i,j)" id="{{''+i+j}}">
+    <div *ngFor="let num of data; let j=index" class="innerDiv" 
+    [ngClass]="{winner : winnerHighlight[i][j]!==0, BL : j===0, BR : j===multi.length-1, BT : i===0, BB : i===multi.length-1 }" 
+    (click)="buttonClick(i,j)" id="{{''+i+j}}">
+      <!--<div class="playerInput" id="{{'0'+i+j}}"></div>-->
+      <div class="playerInput" *ngIf="gameStatus[i][j]!==-1" [ngStyle]="{color: winnerHighlight[i][j]!==0 ?'#fafcfb' : gameStatus[i][j]===0 ? '#28a688' : '#0b332a'}">
+        {{gameStatus[i][j]===0 ? 'X' : 'O'}}</div>
     </div>
   </div>
 </div>
