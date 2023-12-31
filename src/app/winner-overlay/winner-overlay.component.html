@@ -1,0 +1,4 @@
+<div class="winnerWrapper">
+    <h1 class="winnerDisplay" *ngIf="!tieFlag;else tie_content">{{players[currentPlayer]}} wins!! <br><p style="font-size: 20px;"> Please click anywhere to start a new game</p></h1>
+    <ng-template #tie_content><h1 class="winnerDisplay">It's a TIE!! <br><p style="font-size: 20px;"> Please click anywhere to start a new game</p></h1></ng-template>
+  </div>
